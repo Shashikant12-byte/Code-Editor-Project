@@ -8,7 +8,7 @@ import Editor from '@monaco-editor/react';
 import socket from '../socket.js';
 import axios from "axios";
 
-
+console.log("Codeeditor.js loaded");
 
 function Codeeditor() {
   const [code, setCode] = useState("//write your code here");
@@ -21,7 +21,7 @@ function Codeeditor() {
   console.log("Run button clicked");
 
   try {
-    const res = await axios.post("http://localhost:3000/run", {
+    const res = await axios.post("http://localhost:8000/run", {
       code,
       language_id: 63
     });
@@ -43,6 +43,16 @@ const consoleClear=()=>{
   setOutput("");
 }
 
+useEffect(() => {
+  socket.connect();
+
+  socket.emit("joinRoom", { roomId });
+
+  return () => {
+    socket.disconnect();
+  };
+}, [roomId]);
+
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected", socket.id);
@@ -57,12 +67,17 @@ const consoleClear=()=>{
     socket.on('notification', (value) => {
       setNotification(value.message);
       
+      return()=>{
+        socket.off('connect');
+        socket.off('notification');
+        socket.off('room-users');
+        socket.off('code-updated');
+      }
       setTimeout(() => {
         setNotification("");
       }, 3000);
     })
 
-    socket.emit('joinRoom', { roomId: roomId });
 
     //   socket.on("message", (data) => {
     //       console.log(data);
