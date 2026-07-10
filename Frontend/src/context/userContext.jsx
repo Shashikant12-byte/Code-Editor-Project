@@ -9,7 +9,7 @@ function UserContext({children}){
     console.log("UserContext loaded");
     let [currentUser,setCurrentUser]=useState(null);
     const [loading, setLoading] = useState(true);
-    const serverUrl="http://localhost:8000";
+    const serverUrl="https://charis-code-backend.onrender.com";
     const getUserdata=async()=>{
         try{
             let userData=await axios.get(`${serverUrl}/auth/getUserData`,{withCredentials:true});
