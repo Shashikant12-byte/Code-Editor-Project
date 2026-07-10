@@ -25,7 +25,7 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate=useNavigate()
-  let {serverUrl} = useContext(data);
+  let {serverUrl,getUserdata} = useContext(data);
 
   function goToSingup(){
     navigate('/signup')
@@ -61,9 +61,11 @@ function Login() {
         },{withCredentials:true});
         
         setIsSuccess(true);
+        await getUserdata();
         setTimeout(() => {
-          navigate("/room");
-        },5000);
+          navigate("/");
+        },2000);
+
         setIsLoading(false);
       } catch (err) {
         setError('Error creating developer session profile.');
@@ -71,7 +73,7 @@ function Login() {
       }
   };
 
-    // Simulate login verification against registered users in localStorage
+   
     
       
         
@@ -82,7 +84,7 @@ function Login() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
       
       <div className="max-w-md w-full space-y-8 relative">
-        {/* Back Link */}
+       
         <button 
           onClick={() => navigate('/')}
           className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-slate-500 hover:text-indigo-400 transition-colors group cursor-pointer"
@@ -91,12 +93,12 @@ function Login() {
           Back to Homepage
         </button>
 
-        {/* Form Container */}
+        
         <div className="bg-slate-900/40 border border-slate-900 rounded-3xl p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-          {/* Subtle glowing borders */}
+          
           <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
 
-          {/* Heading Logo & Info */}
+          
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 mb-4">
               <Code2 className="w-6 h-6 text-indigo-400" />
@@ -107,7 +109,7 @@ function Login() {
             </p>
           </div>
 
-          {/* Alert messages */}
+          
           {error && (
             <div className="mb-6 p-3.5 rounded-xl bg-rose-950/20 border border-rose-900/30 text-rose-400 text-xs flex items-start gap-2.5">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
@@ -125,7 +127,7 @@ function Login() {
             </div>
           ) : (
             <form className="space-y-5" onSubmit={handleSubmit}>
-              {/* Email address field */}
+              
               <div className="space-y-1.5">
                 <label className="block text-xs font-mono font-medium text-slate-400 uppercase tracking-wider" htmlFor="email-address">
                   Developer Email
@@ -148,7 +150,7 @@ function Login() {
                 </div>
               </div>
 
-              {/* Password field */}
+              
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center">
                   <label className="block text-xs font-mono font-medium text-slate-400 uppercase tracking-wider" htmlFor="password">
@@ -189,7 +191,7 @@ function Login() {
                 </div>
               </div>
 
-              {/* Remember me checkbox */}
+              
               <div className="flex items-center justify-between pt-1">
                 <label className="flex items-center gap-2 cursor-pointer select-none">
                   <input
@@ -202,7 +204,7 @@ function Login() {
                 </label>
               </div>
 
-              {/* Submit button */}
+             
               <button
                 type="submit"
                 disabled={isLoading}
@@ -223,7 +225,7 @@ function Login() {
             </form>
           )}
 
-          {/* Social login options divider */}
+          
           {!isSuccess && (
             <div className="mt-6">
               <div className="relative flex items-center justify-center my-4">
@@ -239,7 +241,7 @@ function Login() {
                   onClick={() => handleSocialLogin('GitHub')}
                   className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-900 text-slate-300 hover:text-white text-xs font-semibold font-mono transition-all cursor-pointer"
                 >
-                  {/* <Github className="w-4 h-4 text-slate-400 group-hover:text-white" /> */}
+                 
                   GitHub
                 </button>
                 <button
@@ -247,7 +249,7 @@ function Login() {
                   onClick={() => handleSocialLogin('Google')}
                   className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-900 text-slate-300 hover:text-white text-xs font-semibold font-mono transition-all cursor-pointer"
                 >
-                  {/* Custom inline vector representation of Google */}
+                 
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -261,7 +263,7 @@ function Login() {
           )}
         </div>
 
-        {/* Navigation prompt to registration page */}
+       
         {!isSuccess && (
           <p className="text-center text-sm text-slate-500">
             New to CodeCraft?{' '}

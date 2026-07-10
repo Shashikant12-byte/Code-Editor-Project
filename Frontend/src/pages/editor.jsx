@@ -1,12 +1,13 @@
 import "./editor.css"
 import { useState } from "react";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect,useContext } from "react";
+import { useParams,useNavigate } from "react-router-dom";
 import { Play } from "lucide-react";
 import Notification from '../components/notification.jsx'
 import Editor from '@monaco-editor/react';
 import socket from '../socket.js';
 import axios from "axios";
+import { data } from "../context/userContext.jsx";
 
 console.log("Codeeditor.js loaded");
 
@@ -16,6 +17,9 @@ function Codeeditor() {
   const [notification, setNotification] = useState("")
   const [output, setOutput] = useState("");
   const { roomId } = useParams();
+  const {currentUser, setCurrentUser} = useContext(data);
+  const userName = currentUser?.username;
+  const navigate = useNavigate();
 
  const runCode = async () => {
   console.log("Run button clicked");
@@ -44,14 +48,20 @@ const consoleClear=()=>{
 }
 
 useEffect(() => {
+  if(!userName){
+    console.log("User not logged in, redirecting to login page");
+    return ;
+  }
   socket.connect();
 
-  socket.emit("joinRoom", { roomId });
+  socket.emit("joinRoom", { 
+    roomId,
+  username: userName});
 
   return () => {
     socket.disconnect();
   };
-}, [roomId]);
+}, [roomId, userName]);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -64,8 +74,14 @@ useEffect(() => {
     socket.on('code-updated', (code) => {
       setCode(code);
     })
-    socket.on('notification', (value) => {
-      setNotification(value.message);
+
+    socket.on('notification', (data) => {
+      setNotification(data.message);
+    });
+
+    setTimeout(() => {
+        setNotification("");
+      }, 3000);
       
       return()=>{
         socket.off('connect');
@@ -73,31 +89,10 @@ useEffect(() => {
         socket.off('room-users');
         socket.off('code-updated');
       }
-      setTimeout(() => {
-        setNotification("");
-      }, 3000);
-    })
 
+}, []);
 
-    //   socket.on("message", (data) => {
-    //       console.log(data);
-    //   });
-    //   socket.on('greet',(data)=>{
-    //   console.log(data);
-    //  })
-    //  socket.on('broadcast',(data)=>{
-    //     setUsers(data.users);
-    //  })
-    //   socket.emit('greet', 'Hello from the client!');
-
-    return () => {
-      socket.off("connect");
-      socket.off("message");
-      socket.off("greet");
-      socket.off("broadcast");
-    };
-
-  }, []);
+if(userName){
 
   return (
     <>
@@ -150,6 +145,8 @@ useEffect(() => {
 </main>
     </>
   )
+}
+
 }
 
 export default Codeeditor;

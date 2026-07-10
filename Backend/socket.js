@@ -21,11 +21,11 @@ io.on('connection', (socket) => {
     console.log('A user connected');
     socket.on('joinRoom', (data) => {
         socket.join(data.roomId);
-        console.log(`${socket.id} joined ${data.roomId}`);
+        console.log(`${data.username} joined ${data.roomId}`);
         socket.roomId = data.roomId;
 
         socket.to(data.roomId).emit('notification', {
-            message: `${socket.id} joined the room`
+            message: `${data.username} joined the room`
         });
         if (roomCode[data.roomId]) {
             socket.emit('code-updated', roomCode[data.roomId]);

@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Fixed the syntax error and converted to standard JS Object literal
+
 const SNIPPETS = {
   'App.jsx': {
     name: 'App.jsx',
@@ -104,7 +104,7 @@ export default function InteractiveEditor() {
     }, 800);
   };
 
-  // Removed unused lang parameter and types
+  
   const highlightCode = (code) => {
     const lines = code.split('\n');
     return lines.map((line, idx) => {
@@ -136,7 +136,7 @@ export default function InteractiveEditor() {
 
   return (
     <div className="w-full max-w-4xl mx-auto rounded-xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 font-sans flex flex-col h-[520px]">
-      {/* Editor Header Bar */}
+      
       <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 mr-3">
@@ -148,7 +148,7 @@ export default function InteractiveEditor() {
             <Code2 className="w-4 h-4 text-indigo-400" />
             <span>WebIDE Cloud</span>
           </div>
-          {/* File Tabs */}
+         
           <div className="flex items-center gap-1">
             {Object.keys(files).map(fileName => {
               const file = files[fileName];
@@ -173,7 +173,7 @@ export default function InteractiveEditor() {
           </div>
         </div>
 
-        {/* Toolbar Controls */}
+       
         <div className="flex items-center gap-2">
           <button
             onClick={handleCopy}
@@ -206,7 +206,7 @@ export default function InteractiveEditor() {
         </div>
       </div>
 
-      {/* Main Grid Area */}
+     
       <div className="flex flex-1 relative overflow-hidden">
         <AnimatePresence>
           {showSettings && (
@@ -251,7 +251,6 @@ export default function InteractiveEditor() {
           )}
         </AnimatePresence>
 
-        {/* Editor Code and Input panel */}
         <div className="flex-1 flex flex-col relative h-full">
           <div className={`flex-1 overflow-auto relative p-4 font-mono ${theme.bg} ${theme.text}`}>
             {/* Kept left alignment padding matching the textarea line numbers spacing constraint */}
@@ -273,7 +272,7 @@ export default function InteractiveEditor() {
             />
           </div>
 
-          {/* Simulated Terminal output */}
+        
           <div className="h-44 bg-slate-950 border-t border-slate-800 flex flex-col font-mono">
             <div className="flex items-center justify-between px-4 py-1.5 bg-slate-900 border-b border-slate-800/80">
               <div className="flex items-center gap-2 text-xs text-slate-400">

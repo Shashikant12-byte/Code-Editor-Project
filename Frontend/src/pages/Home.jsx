@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ArrowRight,
   Sparkles,
@@ -24,8 +25,11 @@ import { data } from '../context/userContext';
 
 
 function Home() {
+  let navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState(0);
   let { currentUser, setCurrentUser } = useContext(data);
+
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -128,7 +132,7 @@ function Home() {
       <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-indigo-950/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
 
      
-          {/* Hero Section */}
+          
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 sm:pt-24 sm:pb-16 text-center">
             <motion.div
               variants={containerVariants}
@@ -136,7 +140,7 @@ function Home() {
               animate="visible"
               className="space-y-6"
             >
-              {/* Top Pill Accent */}
+              
               <motion.div
                 variants={itemVariants}
                 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-950/40 border border-indigo-500/20 text-xs font-mono font-medium text-indigo-300 hover:bg-indigo-900/30 transition-all duration-300 cursor-pointer"
@@ -147,7 +151,7 @@ function Home() {
                 <ArrowRight className="w-3 h-3" />
               </motion.div>
 
-              {/* Main Display Heading */}
+             
               <motion.h1
                 variants={itemVariants}
                 className="font-display text-4xl sm:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-tight"
@@ -155,7 +159,7 @@ function Home() {
                 The Ultimate Cloud Code Editor Built for <span className="bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent">Developers</span>
               </motion.h1>
 
-              {/* Subtitle Description */}
+              
               <motion.p
                 variants={itemVariants}
                 className="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto font-sans leading-relaxed"
@@ -163,7 +167,7 @@ function Home() {
                 Write, test, and preview clean code in real-time. CodeCraft offers a fully responsive, blazing fast IDE right in your browser with offline compiler capabilities and stunning dark theme layouts.
               </motion.p>
 
-              {/* Hero CTAs */}
+             
               <motion.div
                 variants={itemVariants}
                 className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
@@ -172,11 +176,11 @@ function Home() {
                   <div className="space-y-2">
                     <p className="text-sm font-mono text-emerald-400 flex items-center justify-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                      Currently Authenticated as {currentUser.username}
+                      Currently Authenticated as <span className="font-bold text-white">{currentUser.username}</span>
                     </p>
                     <div className="flex gap-4 justify-center">
                       <button
-                        onClick={scrollToEditor}
+                        onClick={() => navigate('/room') }
                         className="px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-white font-medium text-sm transition-all duration-200 shadow-lg cursor-pointer"
                       >
                         Open Playground
@@ -186,7 +190,7 @@ function Home() {
                 ) : (
                   <>
                     <button
-                      onClick={() => setCurrentPage('register')}
+                      onClick={() => navigate('/signup')}
                       className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-200 shadow-xl shadow-indigo-900/30 hover:shadow-indigo-500/20 flex items-center justify-center gap-2 group cursor-pointer"
                     >
                       Start Coding Free
@@ -205,7 +209,7 @@ function Home() {
             </motion.div>
           </section>
 
-          {/* Embedded Live Sandbox Mock Editor Section */}
+          
           <section id="editor-preview" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-mt-20">
             <div className="text-center mb-10">
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-2">Try the Interactive Sandbox</h2>
@@ -214,11 +218,11 @@ function Home() {
               </p>
             </div>
 
-            {/* The Interactive Editor Widget */}
+          
             <InteractiveEditor />
           </section>
 
-          {/* Developer Value Props & Stats */}
+          
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-900">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
               {stats.map((stat, idx) => (
@@ -233,7 +237,7 @@ function Home() {
               ))}
             </div>
 
-            {/* Feature Cards Grid */}
+            
             <div className="text-center mb-12">
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-2">Engineered for Performance</h2>
               <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
@@ -259,7 +263,7 @@ function Home() {
             </div>
           </section>
 
-          {/* Accordion FAQ Section */}
+         
           <section id="faq" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-900 scroll-mt-20">
             <div className="text-center mb-12">
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-2">Frequently Asked Questions</h2>
@@ -295,7 +299,7 @@ function Home() {
             </div>
           </section>
 
-          {/* Footer Branding Area */}
+          
           <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 border-t border-slate-900">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-slate-500 text-xs font-mono">
               <div className="flex items-center gap-2">

@@ -3,12 +3,18 @@ import React, { useState,useContext } from 'react';
 import { Code2, LogIn, UserPlus, LogOut, Terminal, Sparkles, User, HelpCircle, Menu, X } from 'lucide-react';
 import { data } from '../context/userContext';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 export default function Navbar({ currentPage, onLogout }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  let { currentUser, setCurrentUser } = useContext(data);
+  let { serverUrl,currentUser, setCurrentUser } = useContext(data);
   let navigate = useNavigate();
+
+  const handleLogout= async()=>{
+      await axios.post(`${serverUrl}/auth/logout`,{}, {withCredentials:true});
+      setCurrentUser(null);
+  }
 
 
   return (
@@ -29,7 +35,7 @@ export default function Navbar({ currentPage, onLogout }) {
               </span>
             </button>
 
-            {/* Desktop Nav Items */}
+            
             <div className="hidden md:flex items-center gap-6">
               <button 
                 onClick={() => setCurrentPage('home')}
@@ -45,7 +51,7 @@ export default function Navbar({ currentPage, onLogout }) {
                 onClick={(e) => {
                   if (currentPage !== 'home') {
                     setCurrentPage('home');
-                    // Wait a moment for page to render before scrolling
+                    
                     setTimeout(() => {
                       document.getElementById('editor-preview')?.scrollIntoView({ behavior: 'smooth' });
                     }, 100);
@@ -71,7 +77,7 @@ export default function Navbar({ currentPage, onLogout }) {
             </div>
           </div>
 
-          {/* Right Action buttons */}
+          
           <div className="hidden md:flex items-center gap-4">
             {currentUser ? (
               <div className="flex items-center gap-4">
@@ -80,13 +86,13 @@ export default function Navbar({ currentPage, onLogout }) {
                   <div className="w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center">
                     <User className="w-3 h-3 text-indigo-300" />
                   </div>
-                  <span className="text-xs font-mono font-medium text-slate-300">
+                  <span className="text-xs font-mono font-medium text-slate-300 font-bold text-white">
                     {currentUser.username}
                   </span>
                 </div>
 
                 <button
-                  onClick={onLogout}
+                  onClick={handleLogout}
                   className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-rose-400 hover:text-rose-300 hover:bg-rose-950/20 border border-transparent hover:border-rose-900/30 rounded-lg transition-all cursor-pointer"
                 >
                   <LogOut className="w-3.5 h-3.5" />
@@ -120,7 +126,7 @@ export default function Navbar({ currentPage, onLogout }) {
             )}
           </div>
 
-          {/* Mobile menu button */}
+          
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -132,7 +138,7 @@ export default function Navbar({ currentPage, onLogout }) {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+     
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-slate-900 bg-slate-950 px-4 pt-2 pb-4 space-y-2">
           <button 

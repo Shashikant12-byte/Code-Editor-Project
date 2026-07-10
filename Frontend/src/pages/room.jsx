@@ -1,11 +1,24 @@
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useState,useContext,useEffect } from 'react';
+import { Navigate,useNavigate } from "react-router-dom";
+import { data } from "../context/userContext.jsx";
+import Navbar from '../components/Navbar.jsx';
 
 function Room() {
     const [roomId, setRoomId] = useState("");
+    const {currentUser,loading} = useContext(data);
+    console.log("currentUser:", currentUser);
     const navigate = useNavigate();
-    const creatRoom = () => {
+
+    if(loading){
+        return <></>
+    };
+
+     if(!currentUser){
+            navigate('/login');
+    };
+
+const creatRoom = () => {
         const id = nanoid(8);
         setRoomId(id);
         navigate(`/editor/${id}`);
@@ -21,8 +34,14 @@ function Room() {
     }
     return (
         <>
-            <button onClick={creatRoom} >Create Room</button>
-            <input
+        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans select-none selection:bg-indigo-500/20 antialiased selection:text-white">
+        <Navbar/>
+            <div className="h-80 w-80 bg-gray-800 pl-4 rounded mt-10 ml-80">
+                <div>
+              <button onClick={creatRoom} className='rounded' >Create Room</button>
+                </div>
+              <div>
+                <input
                 type="text"
                 placeholder="Enter Room ID"
                 value={roomId}
@@ -30,6 +49,12 @@ function Room() {
             />
             <button onClick={joinRoom} >Join Room</button>
 
+                </div>  
+            
+            </div>
+           
+
+        </div>
         </>
     )
 }

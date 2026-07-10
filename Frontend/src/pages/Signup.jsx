@@ -23,14 +23,15 @@ import { data } from '../context/userContext';
 function Signup() {
 
   const navigate = useNavigate();
-  let { serverUrl } = useContext(data);
+  let { serverUrl, getUserdata } = useContext(data);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  // Custom interactive selectors
+
+  
   const [favLanguage, setFavLanguage] = useState('typescript');
   const [experienceLevel, setExperienceLevel] = useState('mid-level');
 
@@ -39,7 +40,7 @@ function Signup() {
   const [error, setError] = useState(null);
   const [agreeTerms, setAgreeTerms] = useState(false);
 
-  // Dynamic Password Validation Checklist
+
   const [passwordCriteria, setPasswordCriteria] = useState({
     length: false,
     hasNumber: false,
@@ -54,7 +55,7 @@ function Signup() {
     });
   }, [password]);
 
-  // Dynamic Password Strength Meter
+  
   const getPasswordStrength = () => {
     let score = 0;
     if (passwordCriteria.length) score++;
@@ -73,7 +74,7 @@ function Signup() {
     e.preventDefault();
     setError(null);
 
-    // Form Field Validations
+   
     if (!username.trim()) {
       setError('Please provide a unique developer username.');
       return;
@@ -109,7 +110,7 @@ function Signup() {
 
     setIsLoading(true);
 
-    // Save registration securely inside local storage so they can log in
+    
     try {
       let data = await axios.post(`${serverUrl}/auth/signup`, {
         username,
@@ -118,9 +119,10 @@ function Signup() {
       }, { withCredentials: true });
 
       setIsSuccess(true);
+      getUserdata();
       setTimeout(() => {
-        navigate("/room");
-      }, 4000);
+        navigate('/');
+      }, 2000);
 
       setIsLoading(false);
 
@@ -132,11 +134,11 @@ function Signup() {
 
   return (
     <div className="bg-slate-950 text-slate-100 min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans">
-      {/* Background radial glow */}
+      
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-indigo-900/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
 
       <div className="max-w-lg w-full space-y-6 relative">
-        {/* Back Link */}
+        
         <button
           onClick={() => navigate('/')}
           className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-slate-500 hover:text-indigo-400 transition-colors group cursor-pointer"
@@ -145,11 +147,11 @@ function Signup() {
           Back to Homepage
         </button>
 
-        {/* Card Container */}
+       
         <div className="bg-slate-900/40 border border-slate-900 rounded-3xl p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
 
-          {/* Heading */}
+          
           <div className="text-center mb-6">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 mb-3">
               <Code2 className="w-6 h-6 text-indigo-400" />
@@ -160,7 +162,7 @@ function Signup() {
             </p>
           </div>
 
-          {/* Error Alert Box */}
+          
           {error && (
             <div className="mb-5 p-3.5 rounded-xl bg-rose-950/20 border border-rose-900/30 text-rose-400 text-xs flex items-start gap-2.5">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
@@ -199,7 +201,7 @@ function Signup() {
                   </div>
                 </div>
 
-                {/* Email */}
+               
                 <div className="space-y-1">
                   <label className="block text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-wider">
                     Email Address
@@ -220,7 +222,7 @@ function Signup() {
                 </div>
               </div>
 
-              {/* Password Fields */}
+              
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Password Input */}
                 <div className="space-y-1">
@@ -249,7 +251,7 @@ function Signup() {
                   </div>
                 </div>
 
-                {/* Confirm Password */}
+               
                 <div className="space-y-1">
                   <label className="block text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-wider">
                     Confirm Password
@@ -270,7 +272,7 @@ function Signup() {
                 </div>
               </div>
 
-              {/* Password Criteria & Strength Bar (Renders if user started typing) */}
+              
               {password.length > 0 && (
                 <div className="p-3 bg-slate-950 rounded-xl border border-slate-900 space-y-2">
                   <div className="flex justify-between items-center text-[10px] font-mono">
@@ -278,12 +280,12 @@ function Signup() {
                     <span className={`${strength.textColor} font-semibold uppercase`}>{strength.label}</span>
                   </div>
 
-                  {/* Progress Bar background */}
+                 
                   <div className="h-1 bg-slate-850 rounded-full overflow-hidden">
                     <div className={`h-full ${strength.color} ${strength.width} transition-all duration-300`}></div>
                   </div>
 
-                  {/* Requirements grid */}
+                  
                   <div className="grid grid-cols-3 gap-1 pt-1 text-[9px] font-mono text-slate-500">
                     <div className="flex items-center gap-1">
                       <div className={`w-3 h-3 rounded-full flex items-center justify-center ${passwordCriteria.length ? 'bg-emerald-950 text-emerald-400' : 'bg-slate-900'}`}>
@@ -307,9 +309,9 @@ function Signup() {
                 </div>
               )}
 
-              {/* Preferences: Language and Experience */}
+              
               <div className="space-y-3 pt-2 border-t border-slate-900">
-                {/* Language Select badges */}
+                
                 <div className="space-y-1.5">
                   <label className="block text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-wider">
                     Primary Programming Language
@@ -335,7 +337,7 @@ function Signup() {
                   </div>
                 </div>
 
-                {/* Experience Select */}
+                
                 <div className="space-y-1.5">
                   <label className="block text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-wider">
                     Experience Level
@@ -358,7 +360,7 @@ function Signup() {
                 </div>
               </div>
 
-              {/* Agree terms and license agreement checkbox */}
+           
               <div className="flex items-start gap-2.5 pt-2">
                 <input
                   type="checkbox"
@@ -372,7 +374,7 @@ function Signup() {
                 </label>
               </div>
 
-              {/* Submit Action */}
+              
               <button
                 type="submit"
                 disabled={isLoading}
@@ -394,7 +396,7 @@ function Signup() {
           )}
         </div>
 
-        {/* Navigation prompt to Login page */}
+        
         {!isSuccess && (
           <p className="text-center text-sm text-slate-500">
             Already registered?{' '}
