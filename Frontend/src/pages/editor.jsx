@@ -9,7 +9,7 @@ import socket from '../socket.js';
 import axios from "axios";
 import { data } from "../context/userContext.jsx";
 
-console.log("Codeeditor.js loaded");
+
 
 function Codeeditor() {
   const [code, setCode] = useState("//write your code here");
@@ -22,10 +22,10 @@ function Codeeditor() {
   const navigate = useNavigate();
 
  const runCode = async () => {
-  console.log("Run button clicked");
+
 
   try {
-    const res = await axios.post("http://localhost:8000/run", {
+    const res = await axios.post("https://charis-code-backend.onrender.com/run", {
       code,
       language_id: 63
     });
@@ -65,7 +65,6 @@ useEffect(() => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("Connected", socket.id);
     });
 
     socket.on('room-users', (count) => {
