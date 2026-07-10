@@ -17,8 +17,8 @@ import {
   Keyboard
 } from 'lucide-react';
 import {AnimatePresence, motion } from 'motion/react';
-import InteractiveEditor from '../components/InteractiveEditor';
-import Navbar from '../components/Navbar';
+import InteractiveEditor from '../components/interactiveEditor';
+import Navbar from '../components/navbar';
 import { data } from '../context/userContext';
 
 

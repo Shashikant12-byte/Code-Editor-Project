@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Codeeditor from './pages/editor.jsx';
-import Room from './pages/Room.jsx';
-import Home from './pages/Home.jsx'
+import Room from './pages/room.jsx';
+import Home from './pages/home.jsx'
 import Login from './pages/login.jsx';
-import Signup from './pages/Signup.jsx';
+import Signup from './pages/signup.jsx';
 function App(){
 
   return(

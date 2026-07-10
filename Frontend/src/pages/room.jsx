@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import { useState,useContext,useEffect } from 'react';
 import { Navigate,useNavigate } from "react-router-dom";
 import { data } from "../context/userContext.jsx";
-import Navbar from '../components/Navbar.jsx';
+import Navbar from '../components/navbar.jsx';
 
 function Room() {
     const [roomId, setRoomId] = useState("");
