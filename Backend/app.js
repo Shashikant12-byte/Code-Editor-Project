@@ -2,9 +2,9 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
-import authRoute from "./Routes/authRoutes.js";
-import runRoute from "./Routes/runRoutes.js";
-import checkAuth from './Middlewares/checkAuth.js'
+import authRoute from "./routes/authRoutes.js";
+import runRoute from "./routes/runRoutes.js";
+import checkAuth from './middlewares/checkAuth.js'
 connectDB();
 
 const app=express();

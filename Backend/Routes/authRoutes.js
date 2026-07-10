@@ -1,7 +1,7 @@
 import express from 'express';
 import {Router} from 'express';
-import { signup, login, logout , getUserData} from '../Controllers/authController.js';
-import checkAuth from '../Middlewares/checkAuth.js';
+import { signup, login, logout , getUserData} from '../controllers/authController.js';
+import checkAuth from '../middlewares/checkAuth.js';
 
 const authRoute=express(Router());
 
