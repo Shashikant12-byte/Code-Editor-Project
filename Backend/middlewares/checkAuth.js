@@ -3,7 +3,9 @@ import User from '../models/userModel.js';
 
 const checkAuth = async (req, res, next) => {
    try{
+       console.log("Cookies:", req.cookies);
     const token= req.cookies.token;
+      console.log("Token:", token);
     if(!token){
       console.log('No Token Provided');
       return res.status(401).json({ message: 'User Not Verified' });
