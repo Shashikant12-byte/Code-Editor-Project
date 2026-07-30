@@ -78,6 +78,7 @@ const login = async (req, res) => {
                 email: userExist.email
             }
         });
+        console.log("Generated Token:", token);
 
 
 
