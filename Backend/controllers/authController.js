@@ -23,6 +23,7 @@ const signup = async (req, res) => {
             secure: process.env.NODE_ENVIOURNMENT == "production",
             sameSite: 'strict',
             maxAge: 1 * 24 * 60 * 60 * 1000
+            
 
         })
         res.status(201).json({
@@ -32,7 +33,8 @@ const signup = async (req, res) => {
                 username,
                 email,
             }
-        })
+        });
+        console.log("cookie sent");
     }
 
     catch (error) {
