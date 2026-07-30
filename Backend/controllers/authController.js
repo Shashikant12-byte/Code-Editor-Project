@@ -20,7 +20,7 @@ const signup = async (req, res) => {
         let token = generateToken(user._id);
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENVIOURNMENT == "production",
+            secure: process.env.NODE_ENV == "production",
             sameSite: 'strict',
             maxAge: 1 * 24 * 60 * 60 * 1000
             
@@ -64,7 +64,7 @@ const login = async (req, res) => {
 
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENVIOURNMENT === "production",
+            secure: process.env.NODE_ENV === "production",
             sameSite: 'none',
             maxAge: 1 * 24 * 60 * 60 * 1000
 
