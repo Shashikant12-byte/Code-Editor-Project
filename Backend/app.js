@@ -8,6 +8,7 @@ import checkAuth from './middlewares/checkAuth.js'
 connectDB();
 
 const app=express();
+app.set("trust proxy", 1);
 app.use(cors({
     origin: "https://charis-code-frontend.onrender.com",
     credentials: true,
